@@ -1,12 +1,17 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import AddTodoModal from "../components/AddTodoModal.vue";
 
 const todos = ref([]);
 const page = ref(1);
+const showModal = ref(false);
 
 const fetchTodos = async () => {
   try {
+    todos.value = [];
+    page.value = 1;
+
     const res = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/todo/find`,
       {
@@ -16,17 +21,24 @@ const fetchTodos = async () => {
         withCredentials: true,
       }
     );
-    page.value++;
 
-    todos.value.push(...res.data.todos);
+    todos.value = res.data.todos;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching todos:", error);
   }
 };
 
 onMounted(fetchTodos);
 
-const addTodo = () => {};
+const addTodo = () => {
+  showModal.value = true;
+};
+
+const handleTodoAdded = () => {
+  showModal.value = false;
+  fetchTodos();
+};
+
 const editTodo = (todo) => {};
 const completeTodo = async (todo) => {};
 const deleteTodo = async (todo) => {};
@@ -37,6 +49,8 @@ const deleteTodo = async (todo) => {};
     <div class="options">
       <q-btn icon="add" color="primary" @click="addTodo" flat />
     </div>
+    <AddTodoModal v-model="showModal" @todo-added="handleTodoAdded" />
+
     <div>
       <div v-for="todo in todos" :key="todo._id" class="todo-item q-mb-md">
         <div style="display: flex; gap: 8px; margin-inline-start: auto">
