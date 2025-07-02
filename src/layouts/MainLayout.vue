@@ -4,7 +4,6 @@ import { storeToRefs } from "pinia";
 
 const userStore = useUserStore();
 const { isAuthenticated } = storeToRefs(userStore);
-console.log("sdg,.sd", isAuthenticated);
 </script>
 
 <template>

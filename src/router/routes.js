@@ -8,7 +8,13 @@ const routes = [
     children: [
       { path: "", component: IndexPage },
       { path: "/signup", component: () => import("pages/Signup.vue") },
-      { path: "/todos", component: () => import("pages/Todos.vue") },
+      { path: "/signin", component: () => import("pages/Signin.vue") },
+      { path: "/signout", component: () => import("pages/Signout.vue") },
+      {
+        path: "/todos",
+        component: () => import("pages/Todos.vue"),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 

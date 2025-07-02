@@ -1,1 +1,17 @@
-// app global css in SCSS form
+* {
+  box-sizing: border-box;
+}
+
+h2,
+h3,
+p {
+  margin-block: 0;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+h3 {
+  font-size: 1.1rem;
+}
